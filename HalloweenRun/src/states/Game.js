@@ -24,24 +24,6 @@ export default class extends Phaser.State {
 
 hitPumpkin(player, pumpkin)
 {
-    //this.player.animations.play('smash');
-    // just open up 1 letter
-    /*var p = this.game.add.particles('sprites', 'fire')
-    var deathZone = new Phaser.Geom.Rectangle(pumpkin.x - 50, pumpkin.y - 50, 400, 400);
-
-    var emitter = p.createEmitter({
-        x: pumpkin.x - 50,
-        y: pumpkin.y - 50,
-        angle: { min: 30, max: 80 },
-        speed: 300,
-        gravityY: 200,
-        lifespan: { min: 1000, max: 2000 },
-        scale: { start: 0.75, end: 0.75 },
-        blendMode: 'ADD',
-        deathZone: { type: 'onEnter', source: deathZone },
-    });
-    emitter.killAll();*/
-
     var wordLength = this.currentWord.length;
     pumpkin.kill();
 
@@ -138,7 +120,6 @@ update() {
       this.map.setCollisionByExclusion([ 13, 14, 15, 16, 46, 47, 48, 49, 50, 51 ]);
       this.layer = this.map.createLayer('Tile Layer 1');
 
-      //this.layer.debug = true;
 
       this.layer.resizeWorld();
 
@@ -192,10 +173,12 @@ submitAnswer(a)
   {
       this.score += 10 * (this.currentWord.length - this.pumpkinHitCount);
       this.scoreText.text = 'Score: ' + this.score.toString();
+	  dtml.recordGameEvent("haloweenrun","ReinforcementML","correct_word")
   }
-  /*} else {
-      this.player.kill();
-  }*/
+  else
+  {
+	  dtml.recordGameEvent("haloweenrun","ReinforcementML","wrong_word")
+  }
 
   this.reloadPumpkins();
   this.getNewWord();
